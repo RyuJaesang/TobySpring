@@ -9,21 +9,20 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import springbook.user.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "../applicationContext.xml")
 public class UserDaoTest {
-    @Autowired
-    private ApplicationContext context;
-    @Autowired
     UserDao dao;
 
     User user1;
@@ -34,12 +33,14 @@ public class UserDaoTest {
     public void setUp(){
 //        ApplicationContext context = new GenericXmlApplicationContext("springbook/user/applicationContext.xml");
 //        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-        System.out.println(this.context);
-        System.out.println(this);
 
         this.user1 = new User("rjs9611", "류재상", "moongle");
         this.user2 = new User("rhs9908", "류효상", "moongle");
         this.user3 = new User("rys0207", "류용상", "moongle");
+
+        dao = new UserDao();
+        DataSource dataSource = new SingleConnectionDataSource("jdbc:mysql://localhost/testdb?serverTimezone=UTC", "RyuJaesang", "wotkd1112", true);
+        dao.setDataSource(dataSource);
     }
 
 
