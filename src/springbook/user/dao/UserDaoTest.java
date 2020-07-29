@@ -1,5 +1,6 @@
 package springbook.user.dao;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import javafx.application.Application;
 import org.junit.*;
 import org.junit.runner.JUnitCore;
@@ -22,7 +23,12 @@ import java.sql.SQLException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "../test-applicationContext.xml")
 public class UserDaoTest {
+//    @Autowired
+//            private ApplicationContext context;
+
     UserDao dao;
 
     User user1;
@@ -39,7 +45,9 @@ public class UserDaoTest {
         this.user3 = new User("rys0207", "류용상", "moongle");
 
         dao = new UserDao();
-        DataSource dataSource = new SingleConnectionDataSource("jdbc:mysql://localhost/testdb?serverTimezone=UTC", "RyuJaesang", "wotkd1112", true);
+
+        DataSource dataSource = new SingleConnectionDataSource("jdbc:mysql://localhost/springbook?serverTimezone=UTC", "RyuJaesang", "wotkd1112", true);
+
         dao.setDataSource(dataSource);
     }
 
