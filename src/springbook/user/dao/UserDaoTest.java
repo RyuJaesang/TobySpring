@@ -26,8 +26,8 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "../test-applicationContext.xml")
 public class UserDaoTest {
-//    @Autowired
-//            private ApplicationContext context;
+    @Autowired
+    private ApplicationContext context;
 
     UserDao dao;
 
@@ -37,18 +37,12 @@ public class UserDaoTest {
 
     @Before
     public void setUp(){
-//        ApplicationContext context = new GenericXmlApplicationContext("springbook/user/applicationContext.xml");
-//        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        this.dao = context.getBean("userDao", UserDao.class);
 
         this.user1 = new User("rjs9611", "류재상", "moongle");
         this.user2 = new User("rhs9908", "류효상", "moongle");
         this.user3 = new User("rys0207", "류용상", "moongle");
 
-        dao = new UserDao();
-
-        DataSource dataSource = new SingleConnectionDataSource("jdbc:mysql://localhost/springbook?serverTimezone=UTC", "RyuJaesang", "wotkd1112", true);
-
-        dao.setDataSource(dataSource);
     }
 
 
