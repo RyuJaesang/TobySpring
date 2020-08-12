@@ -39,6 +39,7 @@ public class UserDaoTest {
     public void setUp(){
         this.dao = context.getBean("userDao", UserDao.class);
 
+
         this.user1 = new User("rjs9611", "류재상", "moongle");
         this.user2 = new User("rhs9908", "류효상", "moongle");
         this.user3 = new User("rys0207", "류용상", "moongle");
